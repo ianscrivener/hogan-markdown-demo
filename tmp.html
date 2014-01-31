@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+	<div id="output"></div>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+	<script>
+		var view = {
+			title: "Joe",
+			calc: function() {
+				return 2 + 4;
+			}
+		};
+		var output = Mustache.render("{{title}} spends {{calc}}", view);
+		document.getElementById('output').innerHTML = output;
+	</script>
+</body>
+
+</html>

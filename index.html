@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.0/marked.js"></script>
+	<script>
+		//config the markdown files to load & insert
+		var md_files 	= ['intro','body']
+
+		$(function() {
+			var data		= {};
+			var template 	= $('body').html();
+			
+			// loop through the markdown files
+			$.each(md_files, function(index,value) {
+				
+				// load the md file
+				$.get(value + ".md",function(md){
+					
+					// add it to the data object
+					data[value] = marked(md);
+					
+					// when all md  has finished loading
+					if(index+1 == md_files.length){
+						
+						//parse the template with mustache
+						var new_html 		= Mustache.render(template, data);
+
+						// write the new html back to the body
+						$('body').html(new_html);						
+					}
+				});
+			});
+		
+		});			
+	</script>
+</head>
+
+<body>
+	
+	<h1>Markdown Moustache Demo</h1>
+	<!-- note we use triple braces so that moustache doens't escape the HTML -->
+	<strong>{{{intro}}}</strong>
+	
+	<div>{{{body}}}</div>
+</body>
+
+</html>
+
